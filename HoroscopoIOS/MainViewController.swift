@@ -12,7 +12,7 @@ class MainViewController: UIViewController, UITableViewDataSource {
     //se trae el elemento table view desde el MAIN.
     @IBOutlet weak var tableView: UITableView!
     //se declara la variable que contendra la lista desde el archivo Horoscopo que tiene la struct con los datos del horoscopo en la funcion getAll.
-    let horoscopoList: [Horoscopo] = Horoscopo.getAll()
+    var horoscopoList: [Horoscopo] = [];
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,34 +20,36 @@ class MainViewController: UIViewController, UITableViewDataSource {
         
         //este codigo fue utilizado para hcer la importacion del tableView que se agrego en esta clase principal y las 2 funciones que manejan la tableView.
         tableView.dataSource = self
+        
+        Horoscopo.fetchAll { [weak self] horoscopos in
+                    guard let self = self else { return }
+                    DispatchQueue.main.async {
+                        if let horoscopos = horoscopos {
+                            self.horoscopoList = horoscopos
+                            self.tableView.reloadData()
+                        }
+                    }
+                }
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //para retornar la cantidad de horoscopos que hay(rows).
-        return Horoscopo.getAll().count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // la variable cell será igual a la celda con el nombre "cell" que se pasa como identificador y se dice que sera del tipo HoroscopeViewCell.
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! HoroscopeViewCell
-        // se asigna cada fila (cada horoscopo)a la variable horoscopo.
-        let horoscopo = horoscopoList[indexPath.row]
-        // se renderiza cada fila que contiene la variable horoscopo.
-        cell.render(from: horoscopo)
-        //se devuelve la variable cell con todas las celdas.
-        return cell
-    }
+            return horoscopoList.count
+        }
+        
+        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! HoroscopeViewCell
+            let horoscopo = horoscopoList[indexPath.row]
+            cell.render(from: horoscopo)
+            return cell
+        }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == "navigate2"){
-            let detailViewController = segue.destination as! DetailController
-            let indexPath = tableView.indexPathForSelectedRow!
-            let horocopo = horoscopoList[indexPath.row]
-            detailViewController.horoscopo = horocopo
-            
-            //esto es para desseleccionar la selda y no quede seleccionada al volver
-            tableView.deselectRow(at: indexPath, animated: true)
+        override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+            if segue.identifier == "navigate2" {
+                let detailViewController = segue.destination as! DetailController
+                let indexPath = tableView.indexPathForSelectedRow!
+                let horoscopo = horoscopoList[indexPath.row]
+                detailViewController.horoscopo = horoscopo
+                tableView.deselectRow(at: indexPath, animated: true)
+            }
         }
     }
-
-}
 

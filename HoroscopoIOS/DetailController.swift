@@ -14,6 +14,7 @@ class DetailController: UIViewController {
     // este fue traido desde la vista con click derecho
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var datesLabel: UILabel!
+    @IBOutlet weak var dataLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +22,9 @@ class DetailController: UIViewController {
         // Do any additional setup after loading the view.
         navigationItem.title = horoscopo?.name
         iconImageView.image = horoscopo?.icon;
-        datesLabel.text = horoscopo?.dates
+        datesLabel.text = horoscopo.date
+        dataLabel.text = horoscopo.horoscopeData
+        
     }
 
 }

@@ -15,6 +15,7 @@ class HoroscopeViewCell: UITableViewCell {
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var datesLabel: UILabel!
+    //@IBOutlet weak var horoscopeLabel: UILabel! // Añade un UILabel para mostrar los datos del horóscopo
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -35,6 +36,6 @@ class HoroscopeViewCell: UITableViewCell {
     func render(from horoscopo: Horoscopo){
         nameLabel.text = horoscopo.name;
         iconImageView.image = horoscopo.icon;
-        datesLabel.text = horoscopo.dates
+        datesLabel.text = horoscopo.date
     }
 }

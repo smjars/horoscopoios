@@ -96,12 +96,20 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CdK-78-01b">
+                                <rect key="frame" x="59" y="375" width="290" height="177"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="13c-7V-WmU"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="ifA-PF-S2N"/>
                     <connections>
+                        <outlet property="dataLabel" destination="CdK-78-01b" id="Ush-fu-ef0"/>
                         <outlet property="datesLabel" destination="gCk-8P-95i" id="t1L-Fe-aLq"/>
                         <outlet property="iconImageView" destination="5T4-C9-G6Z" id="EBF-b0-gwc"/>
                     </connections>
