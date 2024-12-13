@@ -3,7 +3,7 @@
 //  HoroscopoIOS
 //
 //  Created by Tardes on 12/12/24.
-//
+//Esta struct fue creada dando click derecho en la carpeta principal HoroscopoIOS(new file from template y seleccionando Swift file) ya que es independiente
 
 import Foundation
 import UIKit
