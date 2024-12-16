@@ -7,13 +7,15 @@
 
 import UIKit
 
-class MainViewController: UIViewController, UITableViewDataSource {
+class MainViewController: UIViewController, UITableViewDataSource, UISearchBarDelegate {
     
     //se trae el elemento table view desde el MAIN.
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar! // Añadir IBOutlet para la barra de búsqueda
     //se declara la variable que contendra la lista desde el archivo Horoscopo que tiene la struct con los datos del horoscopo en la funcion getAll.
     var horoscopoList: [Horoscopo] = [];
     // para almacenar si favorito esta seleccionado.//
+    var filteredHoroscopoList: [Horoscopo] = [] // Lista filtrada
     var favoriteHoroscopos: [Horoscopo] = []
     
     override func viewDidLoad() {
@@ -22,6 +24,7 @@ class MainViewController: UIViewController, UITableViewDataSource {
         
         //este codigo fue utilizado para hcer la importacion del tableView que se agrego en esta clase principal y las 2 funciones que manejan la tableView.
         tableView.dataSource = self
+        searchBar.delegate = self // Asignar delegado de la barra de búsqueda
         loadFavorites()
         
         Horoscopo.fetchAll { [weak self] horoscopos in
@@ -29,18 +32,19 @@ class MainViewController: UIViewController, UITableViewDataSource {
             DispatchQueue.main.async {
                 if let horoscopos = horoscopos {
                     self.horoscopoList = horoscopos
+                    self.filteredHoroscopoList = horoscopos // Inicializar lista filtrada
                     self.reloadTableView()
                 }
             }
         }
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return horoscopoList.count
+        return filteredHoroscopoList.count // Usar la lista filtrada
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! HoroscopeViewCell
-        let horoscopo = horoscopoList[indexPath.row]
+        let horoscopo = filteredHoroscopoList[indexPath.row] // Usar la lista filtrada
         let isFavorite = favoriteHoroscopos.contains { $0.id == horoscopo.id }
         cell.render(from: horoscopo, isFavorite: isFavorite)
         cell.favoriteButton.addTarget(self, action: #selector(favoriteButtonTapped(_:)), for: .touchUpInside)
@@ -54,7 +58,7 @@ class MainViewController: UIViewController, UITableViewDataSource {
     }*/
     @objc func favoriteButtonTapped(_ sender: UIButton) {
             let index = sender.tag
-            let horoscopo = horoscopoList[index]
+        let horoscopo = filteredHoroscopoList[index] // Usar la lista filtrada
             
             toggleFavorite(horoscopo: horoscopo)
             
@@ -67,7 +71,7 @@ class MainViewController: UIViewController, UITableViewDataSource {
         if segue.identifier == "navigate2" {
             let detailViewController = segue.destination as! DetailController
             let indexPath = tableView.indexPathForSelectedRow!
-            let horoscopo = horoscopoList[indexPath.row]
+            let horoscopo = filteredHoroscopoList[indexPath.row] // Usar la lista filtrada
             detailViewController.horoscopo = horoscopo
             tableView.deselectRow(at: indexPath, animated: true)
         }
@@ -111,4 +115,13 @@ class MainViewController: UIViewController, UITableViewDataSource {
             UserDefaults.standard.set(data, forKey: "favoriteHoroscopos")
         }
     }
+    // Implementación del delegado de la barra de búsqueda
+        func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+            if searchText.isEmpty {
+                filteredHoroscopoList = horoscopoList
+            } else {
+                filteredHoroscopoList = horoscopoList.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+            }
+            tableView.reloadData()
+        }
 }
