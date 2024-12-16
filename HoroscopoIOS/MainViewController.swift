@@ -48,10 +48,20 @@ class MainViewController: UIViewController, UITableViewDataSource {
         return cell
     }
     
-    @objc func favoriteButtonTapped(_ sender: UIButton) {
+    /*@objc func favoriteButtonTapped(_ sender: UIButton) {
         let horoscopo = horoscopoList[sender.tag]
         toggleFavorite(horoscopo: horoscopo)
-    }
+    }*/
+    @objc func favoriteButtonTapped(_ sender: UIButton) {
+            let index = sender.tag
+            let horoscopo = horoscopoList[index]
+            
+            toggleFavorite(horoscopo: horoscopo)
+            
+            // Scroll to the top of the table view after updating the favorites
+            let indexPath = IndexPath(row: 0, section: 0)
+            tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+        }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "navigate2" {
