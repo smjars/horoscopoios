@@ -45,10 +45,17 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EXA-Nz-Ys3">
+                                                    <rect key="frame" x="314" y="39" width="51" height="25"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" title="Fav"/>
+                                                </button>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="datesLabel" destination="YZk-ka-dqr" id="Pwj-gQ-ih0"/>
+                                            <outlet property="favoriteButton" destination="EXA-Nz-Ys3" id="QjP-LA-oMH"/>
                                             <outlet property="iconImageView" destination="cLE-UE-MDi" id="WOX-uD-NDP"/>
                                             <outlet property="nameLabel" destination="QLq-6v-LMp" id="8La-E4-3pn"/>
                                             <segue destination="Yia-CJ-fDc" kind="show" identifier="navigate2" id="Dma-Jf-oPa"/>
@@ -75,7 +82,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="695" y="-2"/>
+            <point key="canvasLocation" x="693.89312977099235" y="-2.1126760563380285"/>
         </scene>
         <!--Detail Controller-->
         <scene sceneID="Y03-gO-Vlj">

@@ -15,6 +15,7 @@ class HoroscopeViewCell: UITableViewCell {
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var datesLabel: UILabel!
+    @IBOutlet weak var favoriteButton: UIButton!
     //@IBOutlet weak var horoscopeLabel: UILabel! // Añade un UILabel para mostrar los datos del horóscopo
     
     override func awakeFromNib() {
@@ -33,9 +34,11 @@ class HoroscopeViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func render(from horoscopo: Horoscopo){
-        nameLabel.text = horoscopo.name;
-        iconImageView.image = horoscopo.icon;
-        datesLabel.text = horoscopo.date
+    func render(from horoscopo: Horoscopo, isFavorite: Bool) {
+            nameLabel.text = horoscopo.name
+            iconImageView.image = horoscopo.icon
+            datesLabel.text = horoscopo.date
+            let buttonImage = isFavorite ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
+            favoriteButton.setImage(buttonImage, for: .normal)
     }
 }
