@@ -100,7 +100,13 @@ class MainViewController: UIViewController, UITableViewDataSource, UISearchBarDe
                 return false // or any other sorting logic you prefer when both are either favorite or not favorite
             }
         }
-        tableView.reloadData()
+        // Actualizar filteredHoroscopoList después de ordenar horoscopoList
+            if let searchText = searchBar.text, !searchText.isEmpty {
+                filteredHoroscopoList = horoscopoList.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+            } else {
+                filteredHoroscopoList = horoscopoList
+            }
+            tableView.reloadData()
     }
     
     func loadFavorites() {
