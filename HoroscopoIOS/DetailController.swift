@@ -27,6 +27,20 @@ class DetailController: UIViewController {
         
     }
     
+    @IBAction func shareOnWhatsApp(_ sender: UIButton) {
+            if let horoscopeData = horoscopo?.horoscopeData {
+                let urlString = "whatsapp://send?text=\(horoscopeData)"
+                if let urlStringEncoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+                   let url = URL(string: urlStringEncoded) {
+                    if UIApplication.shared.canOpenURL(url) {
+                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                    } else {
+                        print("WhatsApp no está instalado en el dispositivo.")
+                    }
+                }
+            }
+        }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.view.endEditing(true)
