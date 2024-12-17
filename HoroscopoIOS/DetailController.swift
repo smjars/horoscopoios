@@ -25,7 +25,17 @@ class DetailController: UIViewController {
         datesLabel.text = horoscopo.date
         dataLabel.text = horoscopo.horoscopeData
         
+        animateImage() // Llama a la función de animación aquí
     }
+    
+    func animateImage() {
+            UIView.animate(withDuration: 1.0,
+                           delay: 0,
+                           options: [.repeat, .autoreverse],
+                           animations: {
+                            self.iconImageView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+                           }, completion: nil)
+        }
     
     @IBAction func shareOnWhatsApp(_ sender: UIButton) {
             if let horoscopeData = horoscopo?.horoscopeData {
